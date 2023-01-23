@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  nginx:
+    build: ./nginx/
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+     - Saul_Goodman
+    volumes:
+     - Huell_Babi:/var/www/html/
+    depends_on:
+      - wordpress
+  wordpress:
+    build: ./wordpress/
+    #command: ["/usr/sbin/php-fpm7.3", "--nodaemonize"]
+    networks:
+      - Saul_Goodman
+    volumes:
+      - Huell_Babi:/var/www/html/
+networks:
+ Saul_Goodman:
+   driver: bridge
+
+volumes:
+  Huell_Babi:
+    driver_opts:
+      type: "none"
+      o: "bind"
+      device: "/opt/data/wp-data"
