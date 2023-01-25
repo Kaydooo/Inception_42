@@ -1,10 +1,8 @@
-#!bin/sh
+#!/bin/sh
 
 sed -i 's/listen =.*/listen = 0.0.0.0:9000/g' /etc/php/7.3/fpm/pool.d/www.conf
 mkdir -p /run/php
-
-service mysql start
-
+sleep 2
 if ! command -v wp &> /dev/null
 then
   echo "WP-CLI not found, downloading and setting up..."
@@ -14,10 +12,10 @@ then
 fi
 
 if [ ! -d "/var/www/html/wp-content" ]; then
-  mysql -uroot  -e "CREATE DATABASE wordpress; GRANT ALL PRIVILEGES ON wordpress.* TO 'kaydoo'@'localhost' IDENTIFIED BY 'lujwll'; 	   FLUSH PRIVILEGES;"
+
   echo "wp-content directory not found, installing WordPress..."
   wp --allow-root core download
-  wp --allow-root config create --dbname=wordpress --dbuser=kaydoo --dbpass=lujwll
+  wp --allow-root config create --dbname=wordpress --dbuser=kaydoo --dbpass=lujwll --dbhost=mariadb
   #wp --allow-root db create
   wp --allow-root core install --url=localhost --title=KinG --admin_user=kaydooo --admin_password=lujwll --admin_email=m3t9mm@gmail.com
 

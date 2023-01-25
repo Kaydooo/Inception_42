@@ -1,12 +1,13 @@
 FROM debian:buster
 
-RUN apt-get update -y && apt-get install -y curl php php-cli php-fpm php-mysql php-zip php-gd php-mbstring php-curl php-xml mariadb-server
-RUN mkdir -p /var/www/html/testttt
-WORKDIR /var/www/html/abc
-COPY ./conf/setup.sh /tmp/setup.sh
+RUN apt-get update -y && apt-get install -y curl php php-cli php-fpm php-mysql php-zip php-gd php-mbstring php-curl php-xml mariadb-client
+
+WORKDIR /var/www/html/ 
+COPY ./conf/setup.sh /tmp/
 #RUN chmod 777 setup.sh
 
 ENTRYPOINT ["sh", "/tmp/setup.sh"]
+
 #WORKDIR /home/temp
 #RUN mkdir -p /var/www/html/ddd
 #COPY  ./conf/setup.sh .

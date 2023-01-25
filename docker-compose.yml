@@ -2,30 +2,50 @@ version: '3'
 
 services:
   nginx:
+    container_name: nginx
     build: ./nginx/
     ports:
       - 80:80
       - 443:443
     networks:
-     - Saul_Goodman
+     - Saul_Goodman_1
     volumes:
-     - Huell_Babi:/var/www/html/
+     - Huell_Babi_1:/var/www/html/
     depends_on:
       - wordpress
   wordpress:
+    container_name: wordpress
     build: ./wordpress/
     #command: ["/usr/sbin/php-fpm7.3", "--nodaemonize"]
     networks:
-      - Saul_Goodman
+      - Saul_Goodman_1
+      - Saul_Goodman_2
     volumes:
-      - Huell_Babi:/var/www/html/
+      - Huell_Babi_1:/var/www/html/
+    depends_on:
+      - mariadb
+  mariadb:
+    container_name: mariadb
+    build: ./mariadb/
+    networks:
+      - Saul_Goodman_2
+    volumes:
+      - Huell_Babi_2:/var/lib/mysql
 networks:
- Saul_Goodman:
+ Saul_Goodman_1:
+   driver: bridge
+ Saul_Goodman_2:
    driver: bridge
 
 volumes:
-  Huell_Babi:
+  Huell_Babi_1:
     driver_opts:
       type: "none"
       o: "bind"
       device: "/opt/data/wp-data"
+
+  Huell_Babi_2:
+    driver_opts:
+      type: "none"
+      o: "bind"
+      device: "/opt/data/database"

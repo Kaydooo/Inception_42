@@ -5,8 +5,8 @@ server {
     ssl_certificate /etc/nginx/cert/cert.pem;
     ssl_certificate_key /etc/nginx/cert/private.key;
 
-    root /var/www/html/wordpress;
-    index index.html index.htm index.nginx-debian.html index.php;
+    root /var/www/html/;
+    index index.html index.php;
     
     location ~ \.php$ {
     include snippets/fastcgi-php.conf;
@@ -18,8 +18,8 @@ server {
     listen 80;
     listen [::]:80;
 
-    root /var/www/html/wordpress;
-    index index.html index.nginx-debian.html index.php;
+    root /var/www/html/;
+    index index.html index.php;
 
     location / {
         try_files $uri $uri/ =404;
