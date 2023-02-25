@@ -17,6 +17,8 @@ services:
     container_name: wordpress
     build: ./wordpress/
     #command: ["/usr/sbin/php-fpm7.3", "--nodaemonize"]
+    env_file:
+      - ./.env
     networks:
       - Saul_Goodman_1
       - Saul_Goodman_2
@@ -27,6 +29,8 @@ services:
   mariadb:
     container_name: mariadb
     build: ./mariadb/
+    env_file:
+      - ./.env
     networks:
       - Saul_Goodman_2
     volumes:
