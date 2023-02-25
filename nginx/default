@@ -1,6 +1,5 @@
 server {
     listen 443 ssl;
-    listen [::]:443 ssl;
 
     ssl_certificate /etc/nginx/cert/cert.pem;
     ssl_certificate_key /etc/nginx/cert/private.key;
@@ -14,21 +13,4 @@ server {
     }
 }
 
-server {
-    listen 80;
-    listen [::]:80;
-
-    root /var/www/html/;
-    index index.html index.php;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-    
-    location ~ \.php$ {
-    include snippets/fastcgi-php.conf;
-    fastcgi_pass wordpress:9000;
-    }
-
-}
 
