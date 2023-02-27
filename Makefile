@@ -1,11 +1,22 @@
-all: wp-data
-	docker compose up
+volume_worepress = /opt/data/wp-data
+volume_database  = /opt/data/database
+
+all: create-volumes run
+
+build: 
+	docker compose build 
+
+create-volumes:
+	mkdir -p $(volume_worepress) $(volume_database)
+	chmod 777 $(volume_worepress) $(volume_database)
+
+run:
+	docker compose up -d
+
+stop:
+	docker compose down
+
+fclean:
+	docker system prune
 	
-wp-data:
-	mkdir -p "/opt/data/wp-data" "/opt/data/database"
-	chmod 777 "/opt/data/"
-	
-	
-re: wp-data
-	docker compose down -v
-	docker compose up --build 
+re: stop fclean build all
