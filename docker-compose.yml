@@ -34,7 +34,20 @@ services:
     networks:
       - Saul_Goodman_2
     volumes:
-      - Huell_Babi_2:/var/lib/mysql
+      - Huell_Babi_2:/var/lib/
+  redis:
+    container_name: redis
+    build: ./bonus/redis
+    #command: ["/usr/sbin/php-fpm7.3", "--nodaemonize"]
+    env_file:
+      - ./.env
+    networks:
+      - Saul_Goodman_1
+      - Saul_Goodman_2
+    volumes:
+      - Huell_Babi_1:/var/www/html/
+    depends_on:
+      - wordpress
 networks:
  Saul_Goodman_1:
    driver: bridge
