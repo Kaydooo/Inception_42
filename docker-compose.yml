@@ -67,6 +67,29 @@ services:
       - Huell_Babi_1:/var/www/html/
     depends_on:
       - wordpress
+  adminer:
+    container_name: adminer
+    build:
+      context: ./bonus/adminer
+      # args:
+      #   FTP_USER: ${FTP_USER}
+      #   FTP_PASS: ${FTP_PASS}
+    env_file:
+      - ./.env
+    networks:
+      - Saul_Goodman_1
+      - Saul_Goodman_2
+    ports:
+      - 8080:8080
+    depends_on:
+      - mariadb
+
+networks:
+ Saul_Goodman_1:
+   driver: bridge
+ Saul_Goodman_2:
+   driver: bridge
+
 networks:
  Saul_Goodman_1:
    driver: bridge
