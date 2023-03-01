@@ -20,8 +20,8 @@ if [ ! -f "/var/www/html/wp-content/wp-config.php" ]; then
   wp --allow-root user create $WP_USER1  $WP_EMAIL1 --user_pass=$WP_PASS1 --role=editor
   #wp --allow-root db create
   wp --allow-root core install --url=localhost --title=KinG --admin_user=$WP_USER --admin_password=$WP_PASS --admin_email=$WP_EMAIL
-  chmod 777 /var/www/html/wp-content
-  chmod 777 /var/www/html/wp-content/*
+  chown -R www-data:www-data /var/www/html/
+  chmod -R 775 /var/www/html
   echo "WordPress has been successfully installed."
 
   wp config set WP_CACHE true --allow-root
@@ -34,5 +34,6 @@ if [ ! -f "/var/www/html/wp-content/wp-config.php" ]; then
 else
   echo "WordPress already installed."
 fi
+
 
 /usr/sbin/php-fpm7.3 --nodaemonize

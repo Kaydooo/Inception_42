@@ -48,6 +48,25 @@ services:
       - Huell_Babi_1:/var/www/html/
     depends_on:
       - wordpress
+  vsftpd:
+    container_name: vsftpd
+    build:
+      context: ./bonus/vsftpd
+      args:
+        FTP_USER: ${FTP_USER}
+        FTP_PASS: ${FTP_PASS}
+    env_file:
+      - ./.env
+    networks:
+      - Saul_Goodman_1
+      - Saul_Goodman_2
+    ports:
+      - 21:21
+      - 4242-4262:4242-4262
+    volumes:
+      - Huell_Babi_1:/var/www/html/
+    depends_on:
+      - wordpress
 networks:
  Saul_Goodman_1:
    driver: bridge
