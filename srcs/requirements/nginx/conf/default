@@ -1,11 +1,11 @@
 server {
     listen 443 ssl;
+    root /var/www/html/;
+    index index.html index.php;
 
     ssl_certificate /etc/nginx/cert/cert.pem;
     ssl_certificate_key /etc/nginx/cert/private.key;
-
-    root /var/www/html/;
-    index index.html index.php;
+    ssl_protocols TLSv1.3;
     
     location ~ \.php$ {
     include snippets/fastcgi-php.conf;
