@@ -13,10 +13,13 @@ run:
 stop:
 	@docker compose -f ./srcs/docker-compose.yml down
 
-clean:
-	@sudo rm -rf /home/${USER}/data
-	@docker system prune
+clean: stop
+	@docker system prune --volumes --all --force
+	@docker rm -q $$(docker ps -qa) 2> /dev/null || true
+	@docker rmi -f $$(docker images -qa) 2> /dev/null || true
+	@docker volume rm $$(docker volume ls -q) 2> /dev/null  || true
+	@rm -rf /home/${USER}/data
 
-re: stop clean all
+re: clean all
 
 .PHONY: all run stop clean re
