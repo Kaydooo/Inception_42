@@ -1,5 +1,5 @@
-volume_worepress = /opt/data/wp-data
-volume_database  = /opt/data/database
+volume_worepress = /home/${USER}/data/wordpress
+volume_database  = /home/${USER}/data/database
 
 all: create-volumes run
 
@@ -13,9 +13,13 @@ run:
 stop:
 	@docker compose -f ./srcs/docker-compose.yml down
 
-fclean:
+clean:
+	@docker container rm -f $$(docker container ls -aq) || true
+	@docker image rm -f $$(docker image ls -q) || true
+	@docker volume rm $$(docker volume ls -q) || true
+	@sudo rm -rf /home/${USER}/data
 	@docker system prune
 
-re: stop fclean all
+re: stop clean all
 
-.PHONY: all run stop fclean re
+.PHONY: all run stop clean re
