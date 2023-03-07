@@ -111,10 +111,10 @@ volumes:
     driver_opts:
       type: "none"
       o: "bind"
-      device: "/opt/data/wp-data"
+      device: /home/${USER}/data/wordpress
 
   Huell_Babi_2:
     driver_opts:
       type: "none"
       o: "bind"
-      device: "/opt/data/database"
+      device: /home/${USER}/data/database
